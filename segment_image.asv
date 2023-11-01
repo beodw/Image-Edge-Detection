@@ -1,0 +1,27 @@
+function seg = segment_image(I) 
+    
+    I = im2double(I);
+    Igr = mat2gray(im2gray(I)); % Convert the image to grayscale
+    % Ir = double(I(:, :, 1));
+    % Ig = double(I(:, :, 2));
+    % Ib = double(I(:, :, 3));
+    
+    % Create subplots for histograms
+    % subplot(2, 3, 1), hist(Igr(:), 64), title("Gray Channel");
+    % subplot(2, 3, 2), hist(Ir(:), 64), title("Red Channel");
+    % subplot(2, 3, 3), hist(Ig(:), 64), title("Green Channel");
+    % subplot(2, 3, 4), hist(Ib(:), 64), title("Blue Channel");
+    
+    % Define thresholds for segmentation
+    thresholds = [0.68, 0.47, 0.37];
+    
+    % Initialize a segmented image with zeros
+    segmented = zeros(size(Igr));
+    
+    % Apply segmentation based on thresholds
+    segmented(Igr >= thresholds(1)) = 0;
+    segmented(Igr < thresholds(1) & Igr >= thresholds(2)) = 1;
+    segmented(Igr < thresholds(2) & Igr >= thresholds(3)) = 2;
+    segmented(Igr < thresholds(3)) = 3;
+    seg=segmented;
+end
